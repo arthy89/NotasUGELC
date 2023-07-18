@@ -3,37 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-
-            @if (session('actualizado'))
-                <div class="row justify-content-end mb-1 position-absolute">
-                    <div class="toast align-items-right text-white bg-success border-0 float-right" role="alert"
-                        aria-live="assertive" aria-atomic="true" data-delay="100">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ session('actualizado') }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
-            @if (session('contra'))
-                <div class="row justify-content-end mb-1 position-absolute">
-                    <div class="toast align-items-right text-white bg-success border-0 float-right" role="alert"
-                        aria-live="assertive" aria-atomic="true" data-delay="100">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ session('contra') }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="col-md-8">
                 <h2>Editando información de - <strong>{{ $usuario->name }}</strong></h2>
                 <form action="{{ route('editar_usuario_g', $usuario->id) }}" method="POST">
@@ -44,7 +13,6 @@
 
                     <div class="card">
                         <div class="card-header text-bg-success">{{ __('Editando información personal') }}</div>
-
 
                         <div class="card-body">
                             {{-- nombres --}}
@@ -114,7 +82,8 @@
                     @method('put')
 
                     <div class="card mt-3">
-                        <div class="card-header text-bg-success">{{ __('Crear nueva contraseña') }}</div>
+                        <div class="card-header text-bg-success">{{ __('Crear nueva contraseña') }} | Contraseña actual:
+                            {{ $usuario->contra }}</div>
 
 
                         <div class="card-body">
@@ -219,4 +188,28 @@
             });
         });
     </script>
+
+    @if (session('actualizado'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "USUARIO ACTUALIZADO",
+                msg: '{{ session('actualizado') }}'
+            });
+        </script>
+    @endif
+
+    @if (session('contra'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "CONTRASEÑA ACTUALIZADA",
+                msg: '{{ session('contra') }}'
+            });
+        </script>
+    @endif
 @endpush
