@@ -61,7 +61,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">Rol</label>
                                 <div class="col-sm-4">
-                                    <select class="js-example-basic-single" name="rol" style="width: 100%;">
+                                    <select class="select2" name="rol" style="width: 100%;">
                                         <option value="Admin">Administrador
                                         </option>
                                         <option value="Director" selected>Director</option>
@@ -73,7 +73,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">Institución</label>
                                 <div class="col-sm-6">
-                                    <select class="js-example-basic-single" name="institucion" style="width: 100%">
+                                    <select class="select2" name="institucion" style="width: 100%">
                                         @foreach ($instituciones as $institucion)
                                             <option value="{{ $institucion->id_inst }}">{{ $institucion->inst_name }}
                                             </option>
@@ -98,7 +98,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('.js-example-basic-single').select2();
+            $('.select2').select2();
         });
     </script>
     <script>

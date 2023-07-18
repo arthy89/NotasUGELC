@@ -3,22 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-
-            @if (session('creado'))
-                <div class="row justify-content-end mb-1 position-absolute">
-                    <div class="toast align-items-right text-white bg-success border-0 float-right" role="alert"
-                        aria-live="assertive" aria-atomic="true" data-delay="100">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ session('creado') }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="row">
                 <div class="col-sm-6">
                     <h2>Gestión de Usuarios</h2>
@@ -35,17 +19,16 @@
 
                     <div class="card-body">
                         Aquí se mostrarán los usuarios <br>
-                        <table id="registro" class="table table-striped shadow p-3 mb-5 bg-body rounded mt-4"
-                            width="100%">
-                            <thead class="bg-success text-white">
+                        <table id="registro" class="table table-striped bg-light shadow mb-5 rounded" width="100%">
+                            <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>APELLIDO Y NOMBRES</th>
-                                    <th>ROL</th>
-                                    <th>CORREO</th>
-                                    <th>CONTRASEÑA</th>
-                                    <th>INSTITUCIÓN</th>
-                                    <th>OPCIONES</th>
+                                    <th class="bg-success text-white">N°</th>
+                                    <th class="bg-success text-white">APELLIDO Y NOMBRES</th>
+                                    <th class="bg-success text-white">ROL</th>
+                                    <th class="bg-success text-white">CORREO</th>
+                                    <th class="bg-success text-white">CONTRASEÑA</th>
+                                    <th class="bg-success text-white">INSTITUCIÓN</th>
+                                    <th class="bg-success text-white">OPCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,4 +129,16 @@
             });
         });
     </script>
+
+    @if (session('creado'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "USUARIO CREADO",
+                msg: '{{ session('creado') }}'
+            });
+        </script>
+    @endif
 @endpush

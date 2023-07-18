@@ -23,7 +23,6 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('clase_estu') }}">Estudiantes</a>
                 </li> --}}
-                {{ route('clase_estu') }}
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">Notas</a>
                 </li>

@@ -6,18 +6,6 @@
             <div class="col-md-8">
                 <h2>Incio de Sesión en el Sistema de Notas</h2>
 
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                @if ($errors->has('email'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ '¡Error de inicio de sesión, credenciales incorrectas!' }}
-                    </div>
-                @endif
-
                 <div class="card">
                     <div class="card-header text-bg-success">
                         Incio de Sesión
@@ -27,16 +15,16 @@
 
                             @csrf
                             <div class="row mb-3">
-                                <label for="email" class="col-sm-2 col-form-label">Correo</label>
-                                <div class="col-sm-10">
+                                <label for="email" class="col-xl-2 col-3 col-form-label">Correo</label>
+                                <div class="col-xl-10 col-9">
                                     <input type="email" required autofocus placeholder="Correo electrónico..."
                                         class="form-control" name="email" value="{{ old('email') }}">
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="password" class="col-sm-2 col-form-label">Contraseña</label>
-                                <div class="col-sm-10">
+                                <label for="password" class="col-xl-2 col-3 col-form-label">Contraseña</label>
+                                <div class="col-xl-10 col-9">
                                     <input type="password" required placeholder="Su contraseña asignada..."
                                         class="form-control" name="password">
                                 </div>
@@ -64,3 +52,29 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @if (session('status'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "CIERRE DE SESIÓN CORRECTO",
+                msg: '{{ session('status') }} Vuelva pronto'
+            });
+        </script>
+    @endif
+
+    @if ($errors->has('email'))
+        <script>
+            Lobibox.notify('error', {
+                width: 400,
+                img: "{{ asset('imgs/error.png') }}",
+                position: 'top right',
+                title: "ERROR DE SESIÓN",
+                msg: '¡Error de inicio de sesión, credenciales incorrectas!'
+            });
+        </script>
+    @endif
+@endpush

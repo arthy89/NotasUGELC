@@ -67,7 +67,7 @@ class UserController extends Controller
             'rol' => $request->rol,
             'id_inst' => $request->institucion,
         ]);
-        return redirect()->route('usuarios')->with('creado', 'Usuario creado correctamente');
+        return redirect()->route('usuarios')->with('creado', 'El usuario se registró  correctamente');
     }
 
     /**
