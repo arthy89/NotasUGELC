@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotasController;
 
 Route::get('/', function () {
     return view('home');
@@ -27,3 +28,8 @@ Route::delete('usuarios/{usuario}/eliminar', [UserController::class, 'destroy'])
 Route::get('estudiantes', [EstudiantesController::class, 'index'])->name('estudiantes_index');
 Route::get('estudiantes/{estudiante}/editar', [EstudiantesController::class, 'edit'])->name('estudiantes_editar');
 Route::put('estudiantes/{estudiante}/actualizar', [EstudiantesController::class, 'update'])->name('estudiantes_actualizar');
+
+// notas
+Route::get('notas', [NotasController::class, 'index'])->name('notas_index');
+Route::get('notas/{curso}', [NotasController::class, 'grados'])->name('grados_index');
+Route::get('notas/{curso}/{grado}', [NotasController::class, 'seccion'])->name('seccion_index');
