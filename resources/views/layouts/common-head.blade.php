@@ -11,7 +11,11 @@
 {{-- <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 <link href="" rel="stylesheet">
 
+{{-- Fontawesome --}}
 <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}" type="text/css">
+
+{{-- Bootstrap Icons --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 {{-- Datatables --}}
 <link rel="stylesheet" href="{{ asset('assets/datatable/dataTables.bootstrap5.min.css') }}">
