@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            @livewire('notas.grado-x', ['grado' => $grado])
+            @livewire('notas.grado-x', ['grado' => $grado, 'curso' => $curso])
         </div>
     </div>
 @endsection

@@ -3,11 +3,15 @@
 namespace App\Http\Livewire\Notas;
 
 use App\Models\Estudiantes;
+use App\Models\Notas;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class GradoX extends Component
 {
     public $grado;
+
+    public $curso;
 
     public $secc;
 
@@ -19,12 +23,29 @@ class GradoX extends Component
     {
         $usuario = auth()->user();
 
-        $estudiantes = Estudiantes::where('est_grado', $this->grado)
-            ->where('id_inst', $usuario->id_inst)
+        $grado = $this->grado;
+        $curso_id = $this->curso->id_curso; // Obtén el valor de id_curso del objeto $this->curso
+
+        $estudiantes = Estudiantes::select('estudiante.*', 'estudiante.id_est as id_estudiante', 'nota.*', 'nota.id_est as id_est_nota')
+            ->leftJoin('nota', function ($join) use ($curso_id) {
+                $join->on('estudiante.id_est', '=', 'nota.id_est')
+                    ->where('nota.id_curso', '=', $curso_id);
+            })
+            ->where('estudiante.est_grado', '=', $grado)
+            ->where('estudiante.id_inst', '=', $usuario->id_inst)
             ->when($this->secc, function ($query, $secc) {
-                return $query->where('est_seccion', $secc);
+                return $query->where('estudiante.est_seccion', $secc);
             })
             ->get();
+
+        dump($estudiantes);
+
+        // $estudiantes = Estudiantes::where('est_grado', $this->grado)
+        //     ->where('id_inst', $usuario->id_inst)
+        //     ->when($this->secc, function ($query, $secc) {
+        //         return $query->where('est_seccion', $secc);
+        //     })
+        //     ->get();
 
         // indice de las filas
         $estudiantes = $estudiantes->map(function ($estudiante, $index) {
