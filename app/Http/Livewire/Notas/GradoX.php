@@ -38,14 +38,7 @@ class GradoX extends Component
             })
             ->get();
 
-        dump($estudiantes);
-
-        // $estudiantes = Estudiantes::where('est_grado', $this->grado)
-        //     ->where('id_inst', $usuario->id_inst)
-        //     ->when($this->secc, function ($query, $secc) {
-        //         return $query->where('est_seccion', $secc);
-        //     })
-        //     ->get();
+        // dump($estudiantes);
 
         // indice de las filas
         $estudiantes = $estudiantes->map(function ($estudiante, $index) {
@@ -66,5 +59,9 @@ class GradoX extends Component
     {
         $this->secc = $secc;
         $this->mostrarTabla = true;
+    }
+
+    public function actualizar_nota()
+    {
     }
 }

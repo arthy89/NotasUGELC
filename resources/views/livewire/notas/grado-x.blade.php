@@ -51,52 +51,22 @@
                                     <tr>
                                         <td class="text-center">{{ $est->rowNumber }}</td>
                                         <td class="text-uppercase">{{ $est->est_apell }}, {{ $est->est_name }}</td>
+                                        @for ($i = 1; $i <= 10; $i++)
+                                            @php
+                                                $notaProperty = 'nota' . $i;
+                                                $notaValue = $est->$notaProperty;
+                                            @endphp
+                                            <td class="text-center">
+                                                <input class="form-check-input custom-checkbox" type="checkbox"
+                                                    @if ($notaValue === 2) checked @endif
+                                                    wire:model="notas.{{ $est->id_est }}.nota{{ $i }}"
+                                                    wire:click="toggleCheckbox({{ $est->id_est }}, 'nota{{ $i }}')">
+                                                {{ $notaValue }}
+                                            </td>
+                                        @endfor
                                         <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <input class="form-check-input custom-checkbox" type="checkbox"
-                                                value="2" name="notas[]">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#estudiante_eliminar-{{ $est->id_est }}">
-                                                <i class="fa-solid fa-floppy-disk" data-bs-toggle="tooltip"
-                                                    data-bs-html="true" title=""
-                                                    data-bs-original-title="<b>GUARDAR</b>"></i>
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="fa-solid fa-floppy-disk"></i>
                                             </button>
                                         </td>
                                     </tr>
