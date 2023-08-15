@@ -28,6 +28,7 @@ class Notas extends Model
         'nota8',
         'nota9',
         'nota10',
-        'promedio'
+        'aciertos',
+        'logro'
     ];
 }

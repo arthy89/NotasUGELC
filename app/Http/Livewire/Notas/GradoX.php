@@ -6,6 +6,9 @@ use App\Models\Estudiantes;
 use App\Models\Notas;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isNull;
 
 class GradoX extends Component
 {
@@ -51,7 +54,7 @@ class GradoX extends Component
 
         return view('livewire.notas.grado-x', [
             'estudiantes' => $estudiantes,
-            'secciones' => $secciones,
+            'secciones' => $secciones
         ]);
     }
 
@@ -61,7 +64,17 @@ class GradoX extends Component
         $this->mostrarTabla = true;
     }
 
-    public function actualizar_nota()
+    public function actualizar_nota($idNota, $idEstudiante, $notas_array)
     {
+        $nota = Notas::find($idNota);
+
+        if (is_null($nota)) {
+            dump('sin datos');
+        }
+
+        dump($notas_array);
+        // $logro = request()->input('logro-' . $idEstudiante);
+        // $logro = $request->input('logro-' . $idEstudiante);
+        // $logro = $_POST['logro-' . $idEstudiante];
     }
 }

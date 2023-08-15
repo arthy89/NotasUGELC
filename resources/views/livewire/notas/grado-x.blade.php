@@ -9,7 +9,7 @@
         }
     </style>
     <div class="col-12">
-        <div class="card shadow">
+        <div class="card shadow mx-2">
             <div class="card-header text-bg-success">Seleccione la SECCIÓN que desea llenar las notas</div>
             <div class="card-body">
                 <div class="row justify-content-center">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 @if ($mostrarTabla)
-                    <table class="table table-sm table-bordered shadow">
+                    <table class="table table-sm table-bordered shadow table-rounded">
                         <thead class="text-center">
                             <tr>
                                 <th class="bg-success text-white fw-bold" width="40px">N°</th>
@@ -42,6 +42,8 @@
                                 <th class="bg-success text-white fw-bold">8</th>
                                 <th class="bg-success text-white fw-bold">9</th>
                                 <th class="bg-success text-white fw-bold">10</th>
+                                <th class="bg-success text-white fw-bold">ACIERTOS</th>
+                                <th class="bg-success text-white fw-bold">NIVEL LOGRADO</th>
                                 <th class="bg-success text-white fw-bold">GUARDAR</th>
                             </tr>
                         </thead>
@@ -49,24 +51,50 @@
                             @foreach ($estudiantes as $est)
                                 @if (!$secc || $est->est_seccion === $secc)
                                     <tr>
-                                        <td class="text-center">{{ $est->rowNumber }}</td>
-                                        <td class="text-uppercase">{{ $est->est_apell }}, {{ $est->est_name }}</td>
+                                        @php
+                                            $notas_array = [];
+                                        @endphp
+
+                                        <td class="text-center">
+                                            {{ $est->rowNumber }}
+                                        </td>
+                                        <td class="text-uppercase">
+                                            {{ $est->est_apell }}, {{ $est->est_name }}
+                                        </td>
                                         @for ($i = 1; $i <= 10; $i++)
                                             @php
                                                 $notaProperty = 'nota' . $i;
                                                 $notaValue = $est->$notaProperty;
+                                                $notaInputId = "nota{$i}-{$est->id_estudiante}";
+                                                $notas_array[$notaInputId] = $notaValue; // Agregamos la nota al array
                                             @endphp
-                                            <td class="text-center">
-                                                <input class="form-check-input custom-checkbox" type="checkbox"
-                                                    @if ($notaValue === 2) checked @endif
-                                                    wire:model="notas.{{ $est->id_est }}.nota{{ $i }}"
-                                                    wire:click="toggleCheckbox({{ $est->id_est }}, 'nota{{ $i }}')">
-                                                {{ $notaValue }}
+                                            <td class="text-center" style="text-align: center;">
+                                                <input id="{{ $notaInputId }}" type="text"
+                                                    class="form-control form-control-sm"
+                                                    style="width: 30px; margin: 0 auto;" value="{{ $notaValue }}"
+                                                    oninput="this.value = this.value.replace(/[^02]/g, '').slice(0, 2); recalculateSumAndEvaluation({{ $est->id_estudiante }}); updateNotasArray('{{ $est->id_estudiante }}', '{{ $notaInputId }}', this.value);"
+                                                    maxlength="1" name="{{ $notaInputId }}">
                                             </td>
                                         @endfor
                                         <td class="text-center">
-                                            <button type="submit" class="btn btn-success btn-sm">
-                                                <i class="fa-solid fa-floppy-disk"></i>
+                                            <span id="sumaNotas-{{ $est->id_estudiante }}">{{ $est->aciertos }}</span>
+                                            <input type="hidden" name="aciertos-{{ $est->id_estudiante }}"
+                                                id="aciertos-{{ $est->id_estudiante }}" value="{{ $est->aciertos }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <span id="evaluation-{{ $est->id_estudiante }}">{{ $est->logro }}</span>
+                                            <input type="text" name="logro-{{ $est->id_estudiante }}"
+                                                id="logro-{{ $est->id_estudiante }}" value="{{ $est->logro }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <button
+                                                wire:click.prevent="actualizar_nota({{ $est->id_nota ?? 0 }}, {{ $est->id_estudiante }}, JSON.stringify(notasArrays[{{ $est->id_estudiante }}]))"
+                                                type="submit" class="btn btn-success btn-sm">
+                                                <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                            </button>
+
+                                            <button type="button" onclick="prueba()">
+                                                xd
                                             </button>
                                         </td>
                                     </tr>
@@ -79,3 +107,73 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Array para almacenar las notas de cada estudiante
+    var notasArrays = {};
+
+    // Función para actualizar el array de notas
+    function updateNotasArray(studentId, notaInputId, notaValue) {
+        if (!notasArrays[studentId]) {
+            notasArrays[studentId] = {};
+        }
+        notasArrays[studentId][notaInputId] = notaValue;
+    }
+
+    function prueba() {
+        console.log(notasArrays);
+    }
+</script>
+
+<script>
+    function recalculateSumAndEvaluation(idestudiante) {
+        let sumaNotas = 0;
+        for (let i = 1; i <= 10; i++) {
+            let notaValue = parseInt(document.getElementById('nota' + i + '-' + idestudiante).value) || 0;
+            sumaNotas += notaValue;
+        }
+
+        document.getElementById('sumaNotas' + '-' + idestudiante).textContent = sumaNotas;
+        document.getElementById('aciertos' + '-' + idestudiante).value = sumaNotas;
+
+        let evaluation = '';
+        if (sumaNotas >= 0 && sumaNotas <= 10) {
+            evaluation = 'C-EN INICIO';
+        } else if (sumaNotas >= 11 && sumaNotas <= 12) {
+            evaluation = 'B-EN PROCESO';
+        } else if (sumaNotas >= 13 && sumaNotas <= 17) {
+            evaluation = 'A-LOGRADO';
+        } else if (sumaNotas >= 18 && sumaNotas <= 20) {
+            evaluation = 'AD-DESTACADO';
+        }
+
+        document.getElementById('evaluation' + '-' + idestudiante).textContent = evaluation;
+        document.getElementById('logro' + '-' + idestudiante).value = evaluation;
+    }
+</script>
+
+@push('scripts')
+    @if (session('status'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "ACCESO CORRECTO",
+                msg: '{{ session('status') }}'
+            });
+        </script>
+    @endif
+
+    @if (session('status'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "ACCESO CORRECTO",
+                msg: '{{ session('status') }}'
+            });
+        </script>
+    @endif
+@endpush
