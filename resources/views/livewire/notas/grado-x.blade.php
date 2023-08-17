@@ -59,7 +59,7 @@
                                             {{ $est->rowNumber }}
                                         </td>
                                         <td class="text-uppercase">
-                                            {{ $est->est_apell }}, {{ $est->est_name }}
+                                            {{ $est->id_estudiante }} - {{ $est->est_apell }}, {{ $est->est_name }}
                                         </td>
                                         @for ($i = 1; $i <= 10; $i++)
                                             @php
@@ -72,7 +72,7 @@
                                                 <input id="{{ $notaInputId }}" type="text"
                                                     class="form-control form-control-sm"
                                                     style="width: 30px; margin: 0 auto;" value="{{ $notaValue }}"
-                                                    oninput="this.value = this.value.replace(/[^02]/g, '').slice(0, 2); recalculateSumAndEvaluation({{ $est->id_estudiante }}); updateNotasArray('{{ $est->id_estudiante }}', '{{ $notaInputId }}', this.value);"
+                                                    oninput="this.value = this.value.replace(/[^02]/g, '').slice(0, 2); recalculateSumAndEvaluation({{ $est->id_estudiante }}); updateNotasArray('{{ $est->id_estudiante }}', 'nota{{ $i }}', this.value);"
                                                     maxlength="1" name="{{ $notaInputId }}">
                                             </td>
                                         @endfor
@@ -83,18 +83,14 @@
                                         </td>
                                         <td class="text-center">
                                             <span id="evaluation-{{ $est->id_estudiante }}">{{ $est->logro }}</span>
-                                            <input type="text" name="logro-{{ $est->id_estudiante }}"
+                                            <input type="hidden" name="logro-{{ $est->id_estudiante }}"
                                                 id="logro-{{ $est->id_estudiante }}" value="{{ $est->logro }}">
                                         </td>
                                         <td class="text-center">
                                             <button
-                                                wire:click.prevent="actualizar_nota({{ $est->id_nota ?? 0 }}, {{ $est->id_estudiante }}, JSON.stringify(notasArrays[{{ $est->id_estudiante }}]))"
+                                                wire:click.prevent="actualizar_nota({{ $est->id_nota ?? 0 }}, {{ $est->id_estudiante }}, JSON.stringify(notasArrays[{{ $est->id_estudiante }}]), JSON.stringify(aciertosArray[{{ $est->id_estudiante }}]))"
                                                 type="submit" class="btn btn-success btn-sm">
                                                 <i class="fa-solid fa-floppy-disk"></i> Guardar
-                                            </button>
-
-                                            <button type="button" onclick="prueba()">
-                                                xd
                                             </button>
                                         </td>
                                     </tr>
@@ -119,13 +115,18 @@
         }
         notasArrays[studentId][notaInputId] = notaValue;
     }
-
-    function prueba() {
-        console.log(notasArrays);
-    }
 </script>
 
 <script>
+    var aciertosArray = {};
+
+    function actualizarAciertos(studentId, suma) {
+        if (!aciertosArray[studentId]) {
+            aciertosArray[studentId] = {};
+        }
+        aciertosArray[studentId]['aciertos'] = suma;
+    }
+
     function recalculateSumAndEvaluation(idestudiante) {
         let sumaNotas = 0;
         for (let i = 1; i <= 10; i++) {
@@ -135,6 +136,7 @@
 
         document.getElementById('sumaNotas' + '-' + idestudiante).textContent = sumaNotas;
         document.getElementById('aciertos' + '-' + idestudiante).value = sumaNotas;
+        actualizarAciertos(idestudiante, sumaNotas);
 
         let evaluation = '';
         if (sumaNotas >= 0 && sumaNotas <= 10) {
@@ -153,27 +155,31 @@
 </script>
 
 @push('scripts')
-    @if (session('status'))
-        <script>
-            Lobibox.notify('success', {
-                width: 400,
-                img: "{{ asset('imgs/success.png') }}",
-                position: 'top right',
-                title: "ACCESO CORRECTO",
-                msg: '{{ session('status') }}'
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('sinActualizar', function() {
+                Lobibox.notify('warning', {
+                    width: 400,
+                    img: "{{ asset('imgs/warning.png') }}",
+                    position: 'top right',
+                    title: "SIN DATOS QUE GUARDAR",
+                    msg: 'Modifique algun registro de notas para guardar correctamente'
+                });
             });
-        </script>
-    @endif
+        });
+    </script>
 
-    @if (session('status'))
-        <script>
-            Lobibox.notify('success', {
-                width: 400,
-                img: "{{ asset('imgs/success.png') }}",
-                position: 'top right',
-                title: "ACCESO CORRECTO",
-                msg: '{{ session('status') }}'
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('registroActualizado', function() {
+                Lobibox.notify('success', {
+                    width: 400,
+                    img: "{{ asset('imgs/success.png') }}",
+                    position: 'top right',
+                    title: "NOTAS ACTUALIZADAS",
+                    msg: 'Las notas se guardaron correctamente'
+                });
             });
-        </script>
-    @endif
+        });
+    </script>
 @endpush
