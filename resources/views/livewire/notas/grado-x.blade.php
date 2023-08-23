@@ -59,14 +59,13 @@
                                             {{ $est->rowNumber }}
                                         </td>
                                         <td class="text-uppercase">
-                                            {{ $est->id_estudiante }} - {{ $est->est_apell }}, {{ $est->est_name }}
+                                            {{ $est->est_apell }}, {{ $est->est_name }}
                                         </td>
                                         @for ($i = 1; $i <= 10; $i++)
                                             @php
                                                 $notaProperty = 'nota' . $i;
                                                 $notaValue = $est->$notaProperty;
                                                 $notaInputId = "nota{$i}-{$est->id_estudiante}";
-                                                $notas_array[$notaInputId] = $notaValue; // Agregamos la nota al array
                                             @endphp
                                             <td class="text-center" style="text-align: center;">
                                                 <input id="{{ $notaInputId }}" type="text"

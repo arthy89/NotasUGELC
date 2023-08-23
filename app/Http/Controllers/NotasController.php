@@ -32,8 +32,9 @@ class NotasController extends Controller
         return view('notas.grado', compact('grado', 'curso'));
     }
 
-    public function update(Request $request, Notas $notas)
+    public function estadisticas()
     {
-        //
+        $cursos = Cursos::all();
+        return view('notas.estadisticas', compact('cursos'));
     }
 }
