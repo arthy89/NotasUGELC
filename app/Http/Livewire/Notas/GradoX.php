@@ -6,6 +6,9 @@ use App\Models\Estudiantes;
 use App\Models\Notas;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isNull;
 
 class GradoX extends Component
 {
@@ -36,6 +39,8 @@ class GradoX extends Component
             ->when($this->secc, function ($query, $secc) {
                 return $query->where('estudiante.est_seccion', $secc);
             })
+            ->orderBy('estudiante.est_apell', 'ASC')
+            ->orderBy('estudiante.est_name', 'ASC')
             ->get();
 
         // dump($estudiantes);
@@ -51,7 +56,7 @@ class GradoX extends Component
 
         return view('livewire.notas.grado-x', [
             'estudiantes' => $estudiantes,
-            'secciones' => $secciones,
+            'secciones' => $secciones
         ]);
     }
 
@@ -61,7 +66,62 @@ class GradoX extends Component
         $this->mostrarTabla = true;
     }
 
-    public function actualizar_nota()
+    public function actualizar_nota($idNota, $idEstudiante, $notas_array, $aciertos_array)
     {
+        //id de la nota a actualizar
+        $nota_registro = Notas::find($idNota);
+
+        //id del curso al que se esta llenando
+        $id_curso = $this->curso->id_curso;
+
+        //listado de notas
+        $notas = json_decode($notas_array, true);
+
+        // CUANDO NO EXISTEN NOTAS EN EL ARRAY, nada que actualizar
+        if (is_null($notas)) {
+            $this->emit('sinActualizar');
+        } else {
+            //suma de aciertos pasado como array
+            $aciertos = json_decode($aciertos_array, true);
+
+            //text de logro para la bd
+            $logro = '';
+            if ($aciertos['aciertos'] >= 0 && $aciertos['aciertos'] <= 10) {
+                $logro = 'C-EN INICIO';
+            } else if ($aciertos['aciertos'] >= 11 && $aciertos['aciertos'] <= 12) {
+                $logro = 'B-EN PROCESO';
+            } else if ($aciertos['aciertos'] >= 13 && $aciertos['aciertos'] <= 17) {
+                $logro = 'A-LOGRADO';
+            } else if ($aciertos['aciertos'] >= 18 && $aciertos['aciertos'] <= 20) {
+                $logro = 'AD-DESTACADO';
+            }
+
+            //! CUANDO ES UN NUEVO REGISTRO DE NOTAS
+            if (is_null($nota_registro)) {
+                // cuando no existe el registro de notas
+                $nota_new = Notas::create(array_merge($notas, $aciertos, [
+                    'id_est' => $idEstudiante,
+                    'id_curso' => $id_curso,
+                    'periodo' => 2,
+                    'logro' => $logro,
+                ]));
+
+                $this->emit('registroActualizado');
+            } else {
+                //? CUANDO SE MODIFICA ALGUNA NOTA DE UN ESTUDIANTE YA REGISTRADO
+
+                $nota_registro->update(array_merge($notas, $aciertos, [
+                    'logro' => $logro,
+                ]));
+
+                $this->emit('registroActualizado');
+            }
+        }
+
+
+
+
+
+        // dump($nota_registro->id_nota);
     }
 }

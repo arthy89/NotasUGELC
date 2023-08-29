@@ -26,6 +26,10 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('notas_index') }}">Notas</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('estadisticas_index') }}">Estadísticas</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

@@ -5,7 +5,7 @@
         }
     </style>
     <div class="col-12">
-        <div class="card">
+        <div class="card shadow">
             <div class="card-header text-bg-success">Lista completa de estudiantes</div>
             <div class="card-body">
                 <div class="row">

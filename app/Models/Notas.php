@@ -11,8 +11,6 @@ class Notas extends Model
 
     protected $table = "nota";
 
-    public $timestamps = false;
-
     protected $primaryKey = "id_nota";
 
     protected $fillable = [
@@ -28,6 +26,8 @@ class Notas extends Model
         'nota8',
         'nota9',
         'nota10',
-        'promedio'
+        'aciertos',
+        'logro',
+        'periodo'
     ];
 }
