@@ -23,6 +23,7 @@
                                     <option value="CUARTO">CUARTO</option>
                                     <option value="QUINTO">QUINTO</option>
                                     <option value="SEXTO">SEXTO</option>
+                                    <option value="TODO">TODO</option>
                                 </select>
                             </div>
                         </div>
