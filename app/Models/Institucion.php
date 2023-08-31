@@ -13,9 +13,7 @@ class Institucion extends Model
 
     protected $table = "institucion";
 
-    public $timestamps = false;
-
     protected $primaryKey = "id_inst";
 
-    protected $fillable = ['id_inst','inst_num','inst_name','distrito'];
+    protected $fillable = ['id_inst', 'inst_num', 'inst_name', 'distrito'];
 }

@@ -11,8 +11,6 @@ class Estudiantes extends Model
 
     protected $table = "estudiante";
 
-    public $timestamps = false;
-
     protected $primaryKey = "id_est";
 
     protected $fillable = [
