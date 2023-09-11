@@ -17,9 +17,9 @@
                                 </label>
                                 <select id="grado" class="form-select" aria-label="Default select example">
                                     <option value="" selected>Seleccione el grado...</option>
-                                    <option value="PRIMER">PRIMER</option>
+                                    <option value="PRIMERO">PRIMERO</option>
                                     <option value="SEGUNDO">SEGUNDO</option>
-                                    <option value="TERCER">TERCER</option>
+                                    <option value="TERCERO">TERCERO</option>
                                     <option value="CUARTO">CUARTO</option>
                                     <option value="QUINTO">QUINTO</option>
                                     <option value="SEXTO">SEXTO</option>

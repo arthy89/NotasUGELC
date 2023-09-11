@@ -170,6 +170,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         // datatables
         Yajra\DataTables\DataTablesServiceProvider::class,
+
+        //DOM PDF
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -187,6 +190,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         // datatables yajra
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];

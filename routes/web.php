@@ -32,5 +32,7 @@ Route::put('estudiantes/{estudiante}/actualizar', [EstudiantesController::class,
 // notas
 Route::get('notas', [NotasController::class, 'index'])->name('notas_index');
 Route::get('notas/estadisticas', [NotasController::class, 'estadisticas'])->name('estadisticas_index');
+// imprimir
+Route::get('notas/estadisticas/imprimir/{grado}/{curso}', [NotasController::class, 'imprimir_notas'])->name('imprimir_notas');
 Route::get('notas/{curso}', [NotasController::class, 'grados'])->name('grados_index');
 Route::get('notas/{curso}/{grado}', [NotasController::class, 'seccion'])->name('seccion_index');

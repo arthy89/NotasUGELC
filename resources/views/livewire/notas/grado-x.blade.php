@@ -10,7 +10,8 @@
     </style>
     <div class="col-12">
         <div class="card shadow mx-2">
-            <div class="card-header text-bg-success">Seleccione la SECCIÓN que desea llenar las notas</div>
+            <div class="card-header text-bg-success">Seleccione la SECCIÓN que desea llenar las notas
+            </div>
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-10 mb-3">

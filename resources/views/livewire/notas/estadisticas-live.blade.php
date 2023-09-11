@@ -1,8 +1,16 @@
 <div>
     @if ($mostrarCard && $grado && $curso)
-        <div class="card shadow">
+        <div class="card shadow" id="reporte">
             <div class="card-header text-bg-success">
-                Estadísticas de rendimiento
+                <div class="row">
+                    <div class="col-6">Estadísticas de Rendimiento</div>
+                    <div class="col-6">
+                        <a href="{{ route('imprimir_notas', ['grado' => $grado, 'curso' => $curso]) }}" target="_blank"
+                            class="btn btn-light float-end shadow"><i class="fa-solid fa-print"></i>
+                            Imprimir Reporte de Resultados
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 @if ($participantes_total)

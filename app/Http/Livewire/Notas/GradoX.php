@@ -1,4 +1,5 @@
 <?php
+// !CAMBIAR PERIODO
 
 namespace App\Http\Livewire\Notas;
 
@@ -32,10 +33,12 @@ class GradoX extends Component
         $estudiantes = Estudiantes::select('estudiante.*', 'estudiante.id_est as id_estudiante', 'nota.*', 'nota.id_est as id_est_nota')
             ->leftJoin('nota', function ($join) use ($curso_id) {
                 $join->on('estudiante.id_est', '=', 'nota.id_est')
-                    ->where('nota.id_curso', '=', $curso_id);
+                    ->where('nota.id_curso', '=', $curso_id)
+                    ->where('nota.periodo', '=', 2);
             })
             ->where('estudiante.est_grado', '=', $grado)
             ->where('estudiante.id_inst', '=', $usuario->id_inst)
+            // ->where('nota.periodo', '=', 2)
             ->when($this->secc, function ($query, $secc) {
                 return $query->where('estudiante.est_seccion', $secc);
             })
@@ -117,11 +120,5 @@ class GradoX extends Component
                 $this->emit('registroActualizado');
             }
         }
-
-
-
-
-
-        // dump($nota_registro->id_nota);
     }
 }

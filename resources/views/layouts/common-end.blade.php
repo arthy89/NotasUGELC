@@ -5,6 +5,7 @@
 <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script src="{{ asset('assetsnotf/js/Lobibox.js') }}"></script>
 <script src="{{ asset('assetsnotf/js/notification-active.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();

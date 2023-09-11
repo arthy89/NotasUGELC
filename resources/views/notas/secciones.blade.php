@@ -7,10 +7,10 @@
                     <p class="fs-1 fw-bold shadow rounded text-center text-bg-success">{{ $curso->curso_name }}</p>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-8">
                 <div class="row text-center">
                     <div class="col-md-4 d-grid gap-2">
-                        <a href="{{ route('seccion_index', [$curso->curso_name, 'PRIMER']) }}"
+                        <a href="{{ route('seccion_index', [$curso->curso_name, 'PRIMERO']) }}"
                             class="shadow btn btn-lg btn-primary">
                             <i class="bi bi-1-circle-fill"></i>&nbsp; Primer Grado</a>
                     </div>
