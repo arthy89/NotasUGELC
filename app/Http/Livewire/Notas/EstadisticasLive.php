@@ -26,27 +26,46 @@ class EstadisticasLive extends Component
         //! verificar el grado
         if ($this->grado == 'TODO') {
             // todos sus estudiantes y sus campos sin importar el grado
-            $estudiantes = Estudiantes::where('estudiante.id_inst', $usuario->id_inst)
-                ->select('estudiante.*')->get();
+            if ($usuario->rol != 'Admin') {
+                $estudiantes = Estudiantes::where('estudiante.id_inst', $usuario->id_inst)
+                    ->select('estudiante.*')->get();
+            } else {
+                $estudiantes = Estudiantes::all();
+            }
+
+            // dd($estudiantes);
 
             // total estudiantes matriculados
             $matriculados_total = $estudiantes->count();
 
             // total de estudiantes que participaron en el examen
             $participantes_total = Notas::join('estudiante', 'nota.id_est', '=', 'estudiante.id_est')
-                ->where('estudiante.id_inst', $usuario->id_inst)
+                ->where(function ($query) use ($usuario) {
+                    if ($usuario->rol != 'Admin') {
+                        $query->where('estudiante.id_inst', $usuario->id_inst);
+                    }
+                })
                 ->where('nota.id_curso', $this->curso)
+                ->where('nota.periodo', '=', 2)
                 ->count();
 
             // datos de los participantes
             $participantes = Notas::join('estudiante', 'nota.id_est', '=', 'estudiante.id_est')
-                ->where('estudiante.id_inst', $usuario->id_inst)
+                ->where(function ($query) use ($usuario) {
+                    if ($usuario->rol != 'Admin') {
+                        $query->where('estudiante.id_inst', $usuario->id_inst);
+                    }
+                })
                 ->where('nota.id_curso', $this->curso)
                 ->get();
         } else {
             // todos sus estudiantes y sus campos
-            $estudiantes = Estudiantes::where('estudiante.id_inst', $usuario->id_inst)
-                ->where('estudiante.est_grado', $this->grado)
+            $estudiantes = Estudiantes::where('estudiante.est_grado', $this->grado)
+                ->where(function ($query) use ($usuario) {
+                    if ($usuario->rol != 'Admin') {
+                        $query->where('estudiante.id_inst', $usuario->id_inst);
+                    }
+                })
                 ->select('estudiante.*')->get();
 
             // total estudiantes matriculados
@@ -54,16 +73,26 @@ class EstadisticasLive extends Component
 
             // total de estudiantes que participaron en el examen
             $participantes_total = Notas::join('estudiante', 'nota.id_est', '=', 'estudiante.id_est')
-                ->where('estudiante.id_inst', $usuario->id_inst)
+                ->where(function ($query) use ($usuario) {
+                    if ($usuario->rol != 'Admin') {
+                        $query->where('estudiante.id_inst', $usuario->id_inst);
+                    }
+                })
                 ->where('estudiante.est_grado', $this->grado)
                 ->where('nota.id_curso', $this->curso)
+                ->where('nota.periodo', '=', 2)
                 ->count();
 
             // datos de los participantes
             $participantes = Notas::join('estudiante', 'nota.id_est', '=', 'estudiante.id_est')
-                ->where('estudiante.id_inst', $usuario->id_inst)
+                ->where(function ($query) use ($usuario) {
+                    if ($usuario->rol != 'Admin') {
+                        $query->where('estudiante.id_inst', $usuario->id_inst);
+                    }
+                })
                 ->where('estudiante.est_grado', $this->grado)
                 ->where('nota.id_curso', $this->curso)
+                ->where('nota.periodo', '=', 2)
                 ->get();
         }
 

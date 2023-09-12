@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <a href="" class="btn btn-success"><img
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <a href="{{ route('home') }}" class="btn btn-success"><img
                     src="http://ofictd.ugelcarabaya.edu.pe/images/login_Carabaya.gif" width="30px" alt=""> UGEL
                 CARABAYA</a>
         </a>
@@ -13,23 +13,29 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('usuarios') }}">Gestión de
-                        Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('estudiantes_index') }}">Estudiantes</a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('clase_estu') }}">Estudiantes</a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('notas_index') }}">Notas</a>
-                </li>
+                @auth
+                    @if (Auth::user()->rol == 'Admin')
+                        <li class="nav-item">
+                            <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('usuarios')) ? 'btn-success' : 'btn-outline-dark' }}"
+                                aria-current="page" href="{{ route('usuarios') }}">
+                                Gestión de Usuarios
+                            </a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estudiantes_index')) ? 'btn-success' : 'btn-outline-dark' }}"
+                            aria-current="page" href="{{ route('estudiantes_index') }}">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('notas_index')) ? 'btn-success' : 'btn-outline-dark' }}"
+                            aria-current="page" href="{{ route('notas_index') }}">Notas</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('estadisticas_index') }}">Estadísticas</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estadisticas_index')) ? 'btn-success' : 'btn-outline-dark' }}"
+                            aria-current="page" href="{{ route('estadisticas_index') }}">Estadísticas</a>
+                    </li>
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -48,24 +54,24 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ Auth::user()->name }} - {{ Auth::user()->rol }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <strong>Cerrar Sesión</strong>
-                            </a>
-
+                                    <strong>Cerrar Sesión</strong>
+                                </a>
+                            </li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-                        </div>
-                    </li>
+                        </ul>
+                    </div>
                 @endguest
             </ul>
         </div>

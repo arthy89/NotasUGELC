@@ -24,6 +24,7 @@
                                 class="fw-bold text-uppercase">{{ $est_act->est_apell }},
                                 {{ $est_act->est_name }}</span>?</p>
                         <p class="fst-italic">Esta acción no se podrá deshacer.</p>
+                        <p class="fst-italic text-bg-danger">TAMBIÉN SE ELIMINARÁN LAS NOTAS DEL ESTUDIANTE</p>
                     </div>
                     <div class="modal-footer bg-light text-white">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i

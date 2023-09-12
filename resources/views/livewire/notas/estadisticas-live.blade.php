@@ -5,10 +5,13 @@
                 <div class="row">
                     <div class="col-6">Estadísticas de Rendimiento</div>
                     <div class="col-6">
-                        <a href="{{ route('imprimir_notas', ['grado' => $grado, 'curso' => $curso]) }}" target="_blank"
-                            class="btn btn-light float-end shadow"><i class="fa-solid fa-print"></i>
-                            Imprimir Reporte de Resultados
-                        </a>
+                        @if ($participantes_total)
+                            <a href="{{ route('imprimir_notas', ['grado' => $grado, 'curso' => $curso]) }}"
+                                target="_blank" class="btn btn-light float-end shadow"><i class="fa-solid fa-print"></i>
+                                Imprimir Reporte de Resultados
+                            </a>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -22,7 +25,7 @@
                                 @php
                                     $porcentParticipantes = (100 * $participantes_total) / $matriculados_total;
                                     $porcentParticipantes = number_format($porcentParticipantes, 2);
-                                    
+
                                     $noRindieron = $matriculados_total - $participantes_total;
                                     $porcentNoRindieron = (100 * $noRindieron) / $matriculados_total;
                                     $porcentNoRindieron = number_format($porcentNoRindieron, 2);
@@ -52,13 +55,13 @@
                             @php
                                 $porcentInicio = (100 * $est_inicio) / $participantes_total;
                                 $porcentInicio = number_format($porcentInicio, 2);
-                                
+
                                 $porcentProceso = (100 * $est_proceso) / $participantes_total;
                                 $porcentProceso = number_format($porcentProceso, 2);
-                                
+
                                 $porcentLogrado = (100 * $est_logrado) / $participantes_total;
                                 $porcentLogrado = number_format($porcentLogrado, 2);
-                                
+
                                 $porcentDestacado = (100 * $est_destacado) / $participantes_total;
                                 $porcentDestacado = number_format($porcentDestacado, 2);
                             @endphp
@@ -212,14 +215,38 @@
                 data: datos_total,
                 options: {
                     scales: {
+                        x: {
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
                         }
+
                     },
                     plugins: {
                         title: {
                             display: true,
                             text: 'SOBRE LA PARTICIPACIÓN',
+                            color: "black",
+                            font: {
+                                family: 'SF',
+                                size: "18",
+                                weight: "bolder",
+                            },
                         },
                         datalabels: {
                             /* anchor puede ser "start", "center" o "end" */
@@ -233,6 +260,16 @@
                                 family: 'SF',
                                 size: "20",
                                 weight: "bold",
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: "black",
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bold",
+                                },
                             }
                         },
                     }
@@ -250,14 +287,38 @@
                 data: datos_porcentajes,
                 options: {
                     scales: {
+                        x: {
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
                         }
+
                     },
                     plugins: {
                         title: {
                             display: true,
                             text: 'PORCENTAJE DE RESULTADOS GENERALES',
+                            color: "black",
+                            font: {
+                                family: 'SF',
+                                size: "18",
+                                weight: "bolder",
+                            },
                         },
                         datalabels: {
                             /* anchor puede ser "start", "center" o "end" */
@@ -271,6 +332,16 @@
                                 family: 'SF',
                                 size: "20",
                                 weight: "bold",
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: "black",
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bold",
+                                },
                             }
                         },
                     }
@@ -290,15 +361,39 @@
                     // indexAxis: 'y',
                     animation: true,
                     scales: {
+                        x: {
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            ticks: {
+                                color: 'black',
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bolder",
+                                },
+                            }
                         }
+
                     },
                     responsive: true,
                     plugins: {
                         title: {
                             display: true,
                             text: 'RESULTADOS GENERALES',
+                            color: "black",
+                            font: {
+                                family: 'SF',
+                                size: "18",
+                                weight: "bolder",
+                            },
                         },
                         datalabels: {
                             /* anchor puede ser "start", "center" o "end" */
@@ -312,6 +407,16 @@
                                 family: 'SF',
                                 size: "20",
                                 weight: "bold",
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: "black",
+                                font: {
+                                    family: 'SF',
+                                    size: "15",
+                                    weight: "bold",
+                                },
                             }
                         },
                     }

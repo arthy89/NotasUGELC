@@ -109,9 +109,9 @@
                         </div>
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-end disabled" id="boton">Guardar
-                                nuevo
-                                usuario</button>
+                            <button type="submit" class="btn btn-primary float-end disabled" id="boton">
+                                Guardar contraseña nueva
+                            </button>
                         </div>
                     </div>
                 </form>
