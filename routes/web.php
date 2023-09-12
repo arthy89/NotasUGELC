@@ -9,20 +9,24 @@ use App\Http\Controllers\NotasController;
 
 Route::get('/', function () {
     return view('home');
-})->middleware('auth');
+})->name('home')->middleware('auth');
 
 Route::view('login', 'auth/login')->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// usuarios
-Route::get('usuarios', [UserController::class, 'index'])->name('usuarios');
-Route::get('usuarios/crear', [UserController::class, 'create'])->name('crear_usuario');
-Route::post('usuarios/crear', [UserController::class, 'store'])->name('crear_usuario_g');
-Route::get('usuarios/{usuario}/editar', [UserController::class, 'edit'])->name('editar_usuario');
-Route::put('usuarios/{usuario}/editar/guardar', [UserController::class, 'update'])->name('editar_usuario_g');
-Route::put('usuarios/{usuario}/editar/pass', [UserController::class, 'updatepass'])->name('editar_usuario_pass');
-Route::delete('usuarios/{usuario}/eliminar', [UserController::class, 'destroy'])->name('eliminar_usuario');
+Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
+    //RUTAS PARA LOS ADMINISTRADORES Auth::user()->rol == 'Admin' de la BD
+    // usuarios
+    Route::get('usuarios', [UserController::class, 'index'])->name('usuarios');
+    Route::get('usuarios/crear', [UserController::class, 'create'])->name('crear_usuario');
+    Route::post('usuarios/crear', [UserController::class, 'store'])->name('crear_usuario_g');
+    Route::get('usuarios/{usuario}/editar', [UserController::class, 'edit'])->name('editar_usuario');
+    Route::put('usuarios/{usuario}/editar/guardar', [UserController::class, 'update'])->name('editar_usuario_g');
+    Route::put('usuarios/{usuario}/editar/pass', [UserController::class, 'updatepass'])->name('editar_usuario_pass');
+    Route::delete('usuarios/{usuario}/eliminar', [UserController::class, 'destroy'])->name('eliminar_usuario');
+});
+
 
 // estudiantes
 Route::get('estudiantes', [EstudiantesController::class, 'index'])->name('estudiantes_index');
@@ -31,8 +35,8 @@ Route::put('estudiantes/{estudiante}/actualizar', [EstudiantesController::class,
 
 // notas
 Route::get('notas', [NotasController::class, 'index'])->name('notas_index');
-Route::get('notas/estadisticas', [NotasController::class, 'estadisticas'])->name('estadisticas_index');
+Route::get('estadisticas', [NotasController::class, 'estadisticas'])->name('estadisticas_index');
 // imprimir
-Route::get('notas/estadisticas/imprimir/{grado}/{curso}', [NotasController::class, 'imprimir_notas'])->name('imprimir_notas');
+Route::get('estadisticas/imprimir/{grado}/{curso}', [NotasController::class, 'imprimir_notas'])->name('imprimir_notas');
 Route::get('notas/{curso}', [NotasController::class, 'grados'])->name('grados_index');
 Route::get('notas/{curso}/{grado}', [NotasController::class, 'seccion'])->name('seccion_index');
