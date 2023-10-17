@@ -48,9 +48,9 @@
                         </li>
                     @endif
 
-                    @if (Route::has('register'))
+                    @if (Route::has('registro'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('registro') }}">{{ __('Registrarse') }}</a>
                         </li>
                     @endif
                 @else
@@ -61,6 +61,9 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
+                                <a class="dropdown-item" href="{{ route('perfil') }}">
+                                    <span>Editar Perfil</span>
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

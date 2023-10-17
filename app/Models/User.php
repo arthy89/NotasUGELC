@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'contra',
+        'reset_password_token',
         'rol',
         'id_inst',
     ];
@@ -45,4 +46,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function institucion()
+    {
+        return $this->belongsTo(Institucion::class, 'id_inst');
+    }
 }
