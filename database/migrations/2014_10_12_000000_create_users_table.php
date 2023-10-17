@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_inst')->nullable();
             $table->foreign('id_inst')->references('id_inst')->on('institucion');
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('reset_password_token')->nullable();
             $table->string('password');
             $table->string('contra')->nullable();
             $table->rememberToken();

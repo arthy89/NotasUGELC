@@ -11,6 +11,7 @@
                         Incio de Sesión
                     </div>
                     <div class="card-body">
+
                         <form method="POST" action="">
 
                             @csrf
@@ -44,6 +45,15 @@
                                     <button type="submit" class="btn btn-success float-end">Iniciar Sesión</button>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a href="{{ route('form-olvide') }}"
+                                        class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                        Olvidé mi contraseña
+                                    </a>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -74,6 +84,18 @@
                 position: 'top right',
                 title: "ERROR DE SESIÓN",
                 msg: '¡Error de inicio de sesión, credenciales incorrectas!'
+            });
+        </script>
+    @endif
+
+    @if (session('contraAct'))
+        <script>
+            Lobibox.notify('success', {
+                width: 400,
+                img: "{{ asset('imgs/success.png') }}",
+                position: 'top right',
+                title: "Contraseña Reestablecida",
+                msg: '{{ session('contraAct') }}'
             });
         </script>
     @endif

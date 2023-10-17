@@ -6,14 +6,30 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NotasController;
+use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\RecovercontraController;
 
 Route::get('/', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
+Route::get('registro', [LoginController::class, 'registro_view'])->name('registro')->middleware('guest');
+Route::post('registro', [LoginController::class, 'registro'])->middleware('guest');
+
 Route::view('login', 'auth/login')->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// EDIT USER
+Route::get('perfil', [PerfilController::class, 'perfil'])->name('perfil');
+Route::post('perfil/act', [PerfilController::class, 'perfil_act'])->name('perfil_act');
+Route::post('perfil/contra', [PerfilController::class, 'perfil_contra'])->name('perfil_contra');
+
+// RECOVER CONTRA
+Route::get('olvide-mi-contrasena', [RecovercontraController::class, 'formulario'])->name('form-olvide');
+Route::post('enviarcorreo', [RecovercontraController::class, 'enviarcorreo'])->name('enviarcorreo');
+Route::get('reestablecercontra/{token}', [RecovercontraController::class, 'formress'])->name('formress');
+Route::post('reestablecido', [RecovercontraController::class, 'reset'])->name('resetcontra');
 
 Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
     //RUTAS PARA LOS ADMINISTRADORES Auth::user()->rol == 'Admin' de la BD
