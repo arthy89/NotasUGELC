@@ -15,16 +15,18 @@
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-10 mb-3">
-                        <div wire:ignore class="row text-center">
-                            @foreach ($secciones as $secc)
-                                <div class="col-2 d-grid gap-2">
-                                    <button wire:click="$emit('seccion', '{{ $secc }}')"
-                                        class="btn btn-sm btn-primary shadow">Sección
-                                        <strong class="fs-6">&nbsp; {{ $secc }}</strong>
-                                    </button>
-                                </div>
-                            @endforeach
-                        </div>
+                        @if (Auth::user()->rol != 'Docente')
+                            <div wire:ignore class="row text-center">
+                                @foreach ($secciones as $secc)
+                                    <div class="col-2 d-grid gap-2">
+                                        <button wire:click="$emit('seccion', '{{ $secc }}')"
+                                            class="btn btn-sm btn-primary shadow">Sección
+                                            <strong class="fs-6">&nbsp; {{ $secc }}</strong>
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 @if ($mostrarTabla)
@@ -153,6 +155,14 @@
         document.getElementById('logro' + '-' + idestudiante).value = evaluation;
     }
 </script>
+
+@if (Auth::user()->rol == 'Docente')
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.emit('seccion', '{{ Auth::user()->seccion }}');
+        });
+    </script>
+@endif
 
 @push('scripts')
     <script>

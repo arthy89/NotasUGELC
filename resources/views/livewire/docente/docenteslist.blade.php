@@ -19,60 +19,93 @@
                 <table class="table table-striped table-hover shadow rounded">
                     <thead>
                         <tr>
-                            <td class="bg-success text-white fw-bold">N°</td>
-                            <td class="bg-success text-white fw-bold">APELLIDOS Y NOMBRES</td>
-                            <td class="bg-success text-white fw-bold">CORREO</td>
-                            <td class="bg-success text-white fw-bold">GRADO</td>
-                            <td class="bg-success text-white fw-bold">SECCIÓN</td>
+                            <td class="bg-success text-center text-white fw-bold">N°</td>
+                            <td class="bg-success text-center text-white fw-bold">APELLIDOS Y NOMBRES</td>
+                            <td class="bg-success text-center text-white fw-bold">CORREO</td>
+                            <td class="bg-success text-center text-white fw-bold">GRADO</td>
+                            <td class="bg-success text-center text-white fw-bold">SECCIÓN</td>
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach ($docentes as $docente)
-                            <td>
-                                {{ $docente->rowNumber }}
-                            </td>
-                            <td>
-                                {{ $docente->name }}
-                            </td>
-                            <td>
-                                {{ $docente->email }}
-                            </td>
-                            <td>
-                                {{ $docente->grado }}
-                            </td>
-                            <td>
-                                {{ $docente->seccion }}
-                            </td>
-                        @endforeach
-
-                        {{-- @foreach ($estudiantes as $est) --}}
-                        {{-- <tr>
-                                <td>{{ $est->rowNumber }}</td>
-                                <td>{{ $est->distrito }}</td>
-                                <td>{{ $est->inst_name }}</td>
-                                <td class="text-uppercase">{{ $est->est_apell }}, {{ $est->est_name }}</td>
-                                <td>{{ $est->est_grado }}</td>
-                                <td class="text-center">{{ $est->est_seccion }}</td>
-                                <td>
-                                    <a href="{{ route('estudiantes_editar', $est) }}" class="btn btn-warning btn-sm"
-                                        data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        data-bs-original-title="<b>EDITAR</b>" ESTUDIANTE"><i
-                                            class="fa-solid fa-user-pen"></i></a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#estudiante_eliminar-{{ $est->id_est }}">
-                                        <i class="fa-solid fa-trash-can" data-bs-toggle="tooltip" data-bs-html="true"
-                                            title="" data-bs-original-title="<b>ELIMINAR</b>"></i>
-                                    </button>
+                            <tr>
+                                <td class="text-center">
+                                    {{ $docente->rowNumber }}
                                 </td>
-                            </tr> --}}
-
-                        {{-- ? modal accion --}}
-                        {{-- @livewire('estudiantes-live.estudiante-eliminar', ['est' => $est], key($est->id_est)) --}}
-                        {{-- @livewire('estudiantes-live.estudiante-editar', ['est' => $est], key($est->id_est)) --}}
-                        {{-- @endforeach --}}
+                                <td>
+                                    {{ $docente->name }}
+                                </td>
+                                <td>
+                                    {{ $docente->email }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $docente->grado }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $docente->seccion }}
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <!-- Botón "Anterior" -->
+                        <li class="page-item {{ $docentes->previousPageUrl() ? '' : 'disabled' }}">
+                            <a class="page-link cursor-pointer" wire:click="previousPage" tabindex="-1">
+                                Anterior
+                            </a>
+                        </li>
+
+                        <!-- Números de página -->
+                        @php
+                            $start = max(1, $docentes->currentPage() - 2);
+                            $end = min($start + 4, $docentes->lastPage());
+                        @endphp
+
+                        <!-- Mostrar número 1 -->
+                        @if ($start > 1)
+                            <li class="page-item">
+                                <a class="page-link cursor-pointer" wire:click="gotoPage(1)">1</a>
+                            </li>
+                            @if ($start > 2)
+                                <li class="page-item disabled">
+                                    <a class="page-link">...</a>
+                                </li>
+                            @endif
+                        @endif
+
+                        <!-- Mostrar números de página -->
+                        @for ($page = $start; $page <= $end; $page++)
+                            <li class="page-item {{ $page == $docentes->currentPage() ? 'active' : '' }}">
+                                <a class="page-link cursor-pointer"
+                                    wire:click="gotoPage({{ $page }})">{{ $page }}</a>
+                            </li>
+                        @endfor
+
+                        <!-- Mostrar última página -->
+                        @if ($end < $docentes->lastPage())
+                            @if ($end < $docentes->lastPage() - 1)
+                                <li class="page-item disabled">
+                                    <a class="page-link">...</a>
+                                </li>
+                            @endif
+                            <li class="page-item">
+                                <a class="page-link cursor-pointer"
+                                    wire:click="gotoPage({{ $docentes->lastPage() }})">{{ $docentes->lastPage() }}</a>
+                            </li>
+                        @endif
+
+                        <!-- Botón "Siguiente" -->
+                        <li class="page-item {{ $docentes->nextPageUrl() ? '' : 'disabled' }}">
+                            <a class="page-link cursor-pointer" wire:click="nextPage">
+                                Siguiente
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
