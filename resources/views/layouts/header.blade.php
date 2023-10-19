@@ -23,6 +23,10 @@
                         </li>
                     @endif
                     <li class="nav-item">
+                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('docentes')) ? 'btn-success' : 'btn-outline-dark' }}"
+                            aria-current="page" href="{{ route('docentes') }}">Docentes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estudiantes_index')) ? 'btn-success' : 'btn-outline-dark' }}"
                             aria-current="page" href="{{ route('estudiantes_index') }}">Estudiantes</a>
                     </li>
@@ -61,6 +65,9 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
+                                <span class="dropdown-item disabled">
+                                    <small>{{ Auth::user()->institucion->inst_name }}</small>
+                                </span>
                                 <a class="dropdown-item" href="{{ route('perfil') }}">
                                     <span>Editar Perfil</span>
                                 </a>

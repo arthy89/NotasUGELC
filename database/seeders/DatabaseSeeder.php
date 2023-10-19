@@ -8,6 +8,8 @@ use App\Models\Cursos;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,13 +45,26 @@ class DatabaseSeeder extends Seeder
         // * INSTITUCIONES
         // * USAR ARCHIVO 'instituciones.sql'
 
+        // Ruta al archivo SQL
+        $sqlFilePath = public_path('assets/database/instituciones.sql');
+
+        // Verifica si el archivo existe
+        if (File::exists($sqlFilePath)) {
+            // Carga y ejecuta el contenido del archivo SQL
+            $sqlContent = File::get($sqlFilePath);
+            DB::unprepared($sqlContent);
+        } else {
+            // Maneja el caso en el que el archivo no existe
+            echo "El archivo 'instituciones.sql' no se encontró.";
+        }
+
         // ! USUARIOS
         // ! Solo ejecutar despues de 'INSTITUCIONES'
         User::factory()->create([
             'name' => 'Arhyel Ramos',
             'email' => 'arhyel.860@gmail.com',
             'rol' => 'Admin',
-            'id_inst' => 0,
+            'id_inst' => 1,
             'password' => Hash::make('123123'),
             'contra' => '123123'
         ]);
@@ -58,7 +73,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Arhyel Pruebas 2',
             'email' => 'a@info.com',
             'rol' => 'Director',
-            'id_inst' => 78,
+            'id_inst' => 79,
             'password' => Hash::make('123123'),
             'contra' => '123123'
         ]);
@@ -67,7 +82,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'PEDRO AUGUSTO RAMOS BARRIOS',
             'email' => 'pramosb58@gmail.com',
             'rol' => 'Admin',
-            'id_inst' => 2,
+            'id_inst' => 3,
             'password' => Hash::make('123123'),
             'contra' => '123123'
         ]);
@@ -76,7 +91,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'EMILIO SANCHEZ ZEBALLOS',
             'email' => 'emilio@gmail.com',
             'rol' => 'Director',
-            'id_inst' => 4,
+            'id_inst' => 5,
             'password' => Hash::make('123123'),
             'contra' => '123123'
         ]);
