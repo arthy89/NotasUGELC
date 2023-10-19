@@ -44,7 +44,7 @@
                                     class="form-control text-uppercase">
                             </div>
                         </div>
-                        @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 0)
+                        @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 1)
                             {{-- institucion --}}
                             <div wire:ignore.self class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">Institución</label>
@@ -112,7 +112,7 @@
 </div>
 
 @push('scripts')
-    @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 0)
+    @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 1)
         <script>
             document.addEventListener('livewire:load', function() {
                 $('.inst').select2({

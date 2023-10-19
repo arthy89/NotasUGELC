@@ -22,10 +22,13 @@
                             </a>
                         </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('docentes')) ? 'btn-success' : 'btn-outline-dark' }}"
-                            aria-current="page" href="{{ route('docentes') }}">Docentes</a>
-                    </li>
+
+                    @if (Auth::user()->rol == 'Director')
+                        <li class="nav-item">
+                            <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('docentes')) ? 'btn-success' : 'btn-outline-dark' }}"
+                                aria-current="page" href="{{ route('docentes') }}">Docentes</a>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estudiantes_index')) ? 'btn-success' : 'btn-outline-dark' }}"
                             aria-current="page" href="{{ route('estudiantes_index') }}">Estudiantes</a>
@@ -35,10 +38,12 @@
                             aria-current="page" href="{{ route('notas_index') }}">Notas</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estadisticas_index')) ? 'btn-success' : 'btn-outline-dark' }}"
-                            aria-current="page" href="{{ route('estadisticas_index') }}">Estadísticas</a>
-                    </li>
+                    @if (Auth::user()->rol == 'Admin' || Auth::user()->rol == 'Director')
+                        <li class="nav-item">
+                            <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estadisticas_index')) ? 'btn-success' : 'btn-outline-dark' }}"
+                                aria-current="page" href="{{ route('estadisticas_index') }}">Estadísticas</a>
+                        </li>
+                    @endif
                 @endauth
             </ul>
 

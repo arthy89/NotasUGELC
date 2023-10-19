@@ -46,6 +46,17 @@ class NotasController extends Controller
         return view('notas.grado', compact('grado', 'curso'));
     }
 
+    public function nota_docente($curso_name)
+    {
+        $curso = Cursos::where('curso_name', $curso_name)
+            ->select('curso.*')
+            ->first();
+
+        $grado = auth()->user()->grado;
+
+        return view('notas.grado', compact('grado', 'curso'));
+    }
+
     public function estadisticas()
     {
         $cursos = Cursos::all();

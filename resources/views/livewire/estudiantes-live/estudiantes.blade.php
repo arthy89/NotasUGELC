@@ -25,9 +25,9 @@
                             <td class="bg-success text-white fw-bold">DISTRITO</td>
                             <td class="bg-success text-white fw-bold">IIEE</td>
                             <td class="bg-success text-white fw-bold">APELLIDOS Y NOMBRES</td>
-                            <td class="bg-success text-white fw-bold">GRADO</td>
-                            <td class="bg-success text-white fw-bold">SECCIÓN</td>
-                            <td class="bg-success text-white fw-bold">ACCIÓN</td>
+                            <td class="bg-success text-white fw-bold text-center">GRADO</td>
+                            <td class="bg-success text-white fw-bold text-center">SECCIÓN</td>
+                            <td class="bg-success text-white fw-bold text-center">ACCIÓN</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,9 +37,9 @@
                                 <td>{{ $est->distrito }}</td>
                                 <td>{{ $est->inst_name }}</td>
                                 <td class="text-uppercase">{{ $est->est_apell }}, {{ $est->est_name }}</td>
-                                <td>{{ $est->est_grado }}</td>
+                                <td class="text-center">{{ $est->est_grado }}</td>
                                 <td class="text-center">{{ $est->est_seccion }}</td>
-                                <td>
+                                <td class="text-center">
                                     <a href="{{ route('estudiantes_editar', $est) }}" class="btn btn-warning btn-sm"
                                         data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top"
                                         data-bs-original-title="<b>EDITAR</b>" ESTUDIANTE"><i

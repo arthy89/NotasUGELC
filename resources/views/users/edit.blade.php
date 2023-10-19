@@ -46,6 +46,7 @@
                                         <option value="Admin">Administrador
                                         </option>
                                         <option value="Director">Director</option>
+                                        <option value="Docente">Docente</option>
                                     </select>
                                 </div>
                             </div>

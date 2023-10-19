@@ -20,7 +20,7 @@ class EstudianteCrear extends Component
 
     public function rules()
     {
-        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 0) {
+        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 1) {
             return [
                 'estudiante.est_apell' => 'required',
                 'estudiante.est_name' => 'required',
@@ -40,7 +40,7 @@ class EstudianteCrear extends Component
 
     public function messages()
     {
-        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 0) {
+        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 1) {
             return [
                 'estudiante.est_apell.required' => 'Los APELLIDOS son requeridos',
                 'estudiante.est_name.required' => 'Los NOMBRES son requeridos',
@@ -67,7 +67,7 @@ class EstudianteCrear extends Component
     public function guardar_estudiante()
     {
         $this->validate();
-        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 0) {
+        if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 1) {
         } else {
             $this->estudiante->id_inst = $this->usuario->id_inst;
         }

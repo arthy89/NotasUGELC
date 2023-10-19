@@ -56,6 +56,7 @@ Route::get('estadisticas', [NotasController::class, 'estadisticas'])->name('esta
 // imprimir
 Route::get('estadisticas/imprimir/{grado}/{curso}', [NotasController::class, 'imprimir_notas'])->name('imprimir_notas');
 Route::get('notas/{curso}', [NotasController::class, 'grados'])->name('grados_index');
+Route::get('notas/{curso}/docente', [NotasController::class, 'nota_docente'])->name('nota_docente');
 Route::get('notas/{curso}/{grado}', [NotasController::class, 'seccion'])->name('seccion_index');
 
 // DIRECTOR

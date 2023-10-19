@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 0)
+                                @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 1)
                                     {{-- institucion --}}
                                     <div class="mb-3 row">
                                         <label class="col-sm-2 col-form-label">Institución</label>
