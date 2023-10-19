@@ -25,6 +25,8 @@ class User extends Authenticatable
         'reset_password_token',
         'rol',
         'id_inst',
+        'grado',
+        'seccion',
     ];
 
     /**
