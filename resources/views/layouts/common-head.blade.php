@@ -32,6 +32,7 @@
 
 <!-- Scripts -->
 @vite(['resources/js/app.js'])
+@vite(['resources/scss/app.scss'])
 
 <style>
     @font-face {
