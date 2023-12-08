@@ -6,6 +6,9 @@
 
 <title>UGEL CARABAYA</title>
 
+<!-- Ico -->
+<link rel="icon" type="image/x-icon" href="{{ asset('imgs/ugelico.png') }}">
+
 <!-- Fonts -->
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 {{-- <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}

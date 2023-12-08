@@ -111,13 +111,13 @@
 <body>
 
     <h2 class="font-weight-bold text-center display">
-        REPORTE DE RESULTADOS DE LA PRUEBA DIAG 2023 - {{ $grado }} DE PRIMARIA
+        REPORTE DE EVALUACIÓN DE SALIDA 2023 - {{ $grado }} DE PRIMARIA
     </h2>
 
     <table class="">
         <tr class="text-center">
             <td width='150px'>
-                IMAGEN
+                <img src="{{ asset('imgs/Prueba de salida.jpg') }}" alt="Prueba de salida" width="150px">
             </td>
 
             {{-- tabla del medio de los datos --}}
@@ -138,10 +138,6 @@
                     <tr class="text-center">
                         <td class="font-weight-bold">IE</td>
                         <td>{{ $institucion->inst_name }}</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="font-weight-bold">CÓDIGO MODULAR</td>
-                        <td></td>
                     </tr>
                     <tr class="text-center">
                         <td class="font-weight-bold">GRADO</td>
