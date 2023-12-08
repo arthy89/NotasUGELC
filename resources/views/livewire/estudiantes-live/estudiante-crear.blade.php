@@ -64,39 +64,41 @@
                         @endif
 
                         {{-- grado y seccion --}}
-                        <div class="mb-3 row">
-                            {{-- grado --}}
-                            <label class="col-sm-2 col-form-label">Grado</label>
-                            <div wire:ignore.self class="col-sm-4 mt-1 ">
-                                <select wire:model="estudiante.est_grado" class="form-select form-control"
-                                    style="width: 100%">
-                                    <option>Seleccione...</option>
-                                    <option value="PRIMERO">PRIMERO</option>
-                                    <option value="SEGUNDO">SEGUNDO</option>
-                                    <option value="TERCERO">TERCERO</option>
-                                    <option value="CUARTO">CUARTO</option>
-                                    <option value="QUINTO">QUINTO</option>
-                                    <option value="SEXTO">SEXTO</option>
-                                </select>
+                        @if (Auth::user()->rol == 'Admin' || Auth::user()->rol == 'Director')
+                            <div class="mb-3 row">
+                                {{-- grado --}}
+                                <label class="col-sm-2 col-form-label">Grado</label>
+                                <div wire:ignore.self class="col-sm-4 mt-1 ">
+                                    <select wire:model="estudiante.est_grado" class="form-select form-control"
+                                        style="width: 100%">
+                                        <option>Seleccione...</option>
+                                        <option value="PRIMERO">PRIMERO</option>
+                                        <option value="SEGUNDO">SEGUNDO</option>
+                                        <option value="TERCERO">TERCERO</option>
+                                        <option value="CUARTO">CUARTO</option>
+                                        <option value="QUINTO">QUINTO</option>
+                                        <option value="SEXTO">SEXTO</option>
+                                    </select>
+                                </div>
+                                {{-- seccion --}}
+                                <label class="col-sm-2 col-form-label">Sección</label>
+                                <div wire:ignore.self class="col-sm-4 mt-1">
+                                    <select wire:model="estudiante.est_seccion" class="form-select form-control"
+                                        style="width: 100%">
+                                        <option>Seleccione...</option>
+                                        <option value="ÚNICA">ÚNICA</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                        <option value="G">G</option>
+                                        <option value="H">H</option>
+                                    </select>
+                                </div>
                             </div>
-                            {{-- seccion --}}
-                            <label class="col-sm-2 col-form-label">Sección</label>
-                            <div wire:ignore.self class="col-sm-4 mt-1">
-                                <select wire:model="estudiante.est_seccion" class="form-select form-control"
-                                    style="width: 100%">
-                                    <option>Seleccione...</option>
-                                    <option value="ÚNICA">ÚNICA</option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                    <option value="E">E</option>
-                                    <option value="F">F</option>
-                                    <option value="G">G</option>
-                                    <option value="H">H</option>
-                                </select>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="modal-footer bg-light">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i

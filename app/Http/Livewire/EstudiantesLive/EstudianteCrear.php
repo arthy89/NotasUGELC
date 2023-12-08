@@ -28,12 +28,17 @@ class EstudianteCrear extends Component
                 'estudiante.est_grado' => 'required',
                 'estudiante.est_seccion' => 'required',
             ];
-        } else {
+        } else if ($this->usuario->rol == 'Director') {
             return [
                 'estudiante.est_apell' => 'required',
                 'estudiante.est_name' => 'required',
                 'estudiante.est_grado' => 'required',
                 'estudiante.est_seccion' => 'required',
+            ];
+        } else if ($this->usuario->rol == 'Docente') {
+            return [
+                'estudiante.est_apell' => 'required',
+                'estudiante.est_name' => 'required',
             ];
         }
     }
@@ -48,12 +53,17 @@ class EstudianteCrear extends Component
                 'estudiante.est_grado.required' => 'Se requiere el GRADO',
                 'estudiante.est_seccion.required' => 'Se requiere la SECCIÓN',
             ];
-        } else {
+        } else if ($this->usuario->rol == 'Director') {
             return [
                 'estudiante.est_apell.required' => 'Los APELLIDOS son requeridos',
                 'estudiante.est_name.required' => 'Los NOMBRES son requeridos',
                 'estudiante.est_grado.required' => 'Se requiere el GRADO',
                 'estudiante.est_seccion.required' => 'Se requiere la SECCIÓN',
+            ];
+        } else if ($this->usuario->rol == 'Docente') {
+            return [
+                'estudiante.est_apell.required' => 'Los APELLIDOS son requeridos',
+                'estudiante.est_name.required' => 'Los NOMBRES son requeridos',
             ];
         }
     }
@@ -68,8 +78,12 @@ class EstudianteCrear extends Component
     {
         $this->validate();
         if ($this->usuario->rol == 'Admin' && $this->usuario->id_inst == 1) {
-        } else {
+        } else if ($this->usuario->rol == 'Director') {
             $this->estudiante->id_inst = $this->usuario->id_inst;
+        } else if ($this->usuario->rol == 'Docente') {
+            $this->estudiante->id_inst = $this->usuario->id_inst;
+            $this->estudiante->est_grado = $this->usuario->grado;
+            $this->estudiante->est_seccion = $this->usuario->seccion;
         }
         $this->estudiante->save();
         $this->estudiante = new Estudiantes();
