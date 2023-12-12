@@ -31,7 +31,7 @@ class EstudiantesController extends Controller
     {
         $usuario = auth()->user();
 
-        if ($usuario->rol == 'Admin' && $usuario->id_inst == 0) {
+        if ($usuario->rol == 'Admin' && $usuario->id_inst == 1) {
             $estudiante->update([
                 'est_apell' => $request->apellidos,
                 'est_name' => $request->nombres,
