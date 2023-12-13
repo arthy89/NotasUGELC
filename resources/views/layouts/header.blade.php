@@ -71,12 +71,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <span class="dropdown-item disabled">
-                                    <small>{{ Auth::user()->institucion->inst_name }}</small>
+                                    <small class="badge bg-secondary">{{ Auth::user()->institucion->inst_name }}</small>
                                 </span>
                                 <a class="dropdown-item" href="{{ route('perfil') }}">
-                                    <span>Editar Perfil</span>
+                                    <span class="fw-bold">Editar Perfil</span>
                                 </a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item text-bg-danger" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     <strong>Cerrar Sesión</strong>
