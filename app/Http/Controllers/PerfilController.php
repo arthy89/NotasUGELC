@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institucion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,8 @@ class PerfilController extends Controller
 
     public function perfil()
     {
-        return view('perfil.verperfil');
+        $instituciones = Institucion::all();
+        return view('perfil.verperfil', compact('instituciones'));
     }
 
     public function perfil_act(Request $request)
@@ -31,10 +33,18 @@ class PerfilController extends Controller
             'email.email' => 'El formato del Correo no es válido.',
         ]);
 
-        $user->update([
-            'name' => strtoupper($request->name),
-            'email' => $request->email,
-        ]);
+        if ($user->rol == "Admin") {
+            $user->update([
+                'name' => strtoupper($request->name),
+                'email' => $request->email,
+                'id_inst' => $request->institucion,
+            ]);
+        } else {
+            $user->update([
+                'name' => strtoupper($request->name),
+                'email' => $request->email,
+            ]);
+        }
 
         return back()->with('perfilAct', 'Sus datos fueron actualizados');
     }

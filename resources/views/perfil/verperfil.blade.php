@@ -30,6 +30,25 @@
                                 </div>
                             </div>
 
+                            @if (Auth::user()->rol == 'Admin')
+                                {{-- institucion --}}
+                                <div class="mb-3 row">
+                                    <label class="col-sm-2 col-form-label">Institución</label>
+                                    <div class="col-sm-10 mt-1">
+                                        <select id="inst" style="width: 100%" name="institucion">
+                                            @foreach ($instituciones as $inst)
+                                                @if ($inst->id_inst != 0)
+                                                    <option value="{{ $inst->id_inst }}"
+                                                        {{ old('institucion', Auth::user()->institucion->id_inst) == $inst->id_inst ? 'selected' : '' }}>
+                                                        {{ $inst->inst_name }} - {{ $inst->distrito }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="row mb-3">
                                 <label for="name" class="col-xl-2 col-3 col-form-label">Apellidos y Nombres</label>
                                 <div class="col-xl-10 col-9">
@@ -42,7 +61,8 @@
                                 <label for="email" class="col-xl-2 col-3 col-form-label">Correo</label>
                                 <div class="col-xl-10 col-9">
                                     <input type="email" required autofocus placeholder="Correo electrónico..."
-                                        class="form-control" name="email" value="{{ old('email', Auth::user()->email) }}">
+                                        class="form-control" name="email"
+                                        value="{{ old('email', Auth::user()->email) }}">
                                 </div>
                             </div>
 
@@ -186,6 +206,17 @@
                 }
 
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#inst').select2({
+                placeholder: "Seleccione...",
+                allowClear: true
+            });
+            $('#inst').val("{{ old('institucion', Auth::user()->institucion->id_inst) }}");
+            $('#inst').trigger('change');
         });
     </script>
 
