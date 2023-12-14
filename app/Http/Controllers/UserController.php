@@ -70,6 +70,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'contra' => $request->password,
             'rol' => $request->rol,
+            'grado' => $request->grado,
+            'seccion' => $request->seccion,
             'id_inst' => $request->institucion,
         ]);
         return redirect()->route('usuarios')->with('creado', 'El usuario se registró  correctamente');

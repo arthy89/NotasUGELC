@@ -61,10 +61,45 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">Rol</label>
                                 <div class="col-sm-4">
-                                    <select class="select2" name="rol" style="width: 100%;">
+                                    <select class="form-select form-control" name="rol" style="width: 100%;">
+                                        <option value="">Seleccione...</option>
                                         <option value="Admin">Administrador
                                         </option>
-                                        <option value="Director" selected>Director</option>
+                                        <option value="Director">Director</option>
+                                        <option value="Docente">Docente</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- GRADO Y SECCION --}}
+                            <div class="mb-3 row">
+                                {{-- grado --}}
+                                <label class="col-sm-2 col-form-label">Grado</label>
+                                <div class="col-sm-4 mt-1 ">
+                                    <select name="grado" class="form-select form-control" style="width: 100%">
+                                        <option value="">Seleccione...</option>
+                                        <option value="PRIMERO">PRIMERO</option>
+                                        <option value="SEGUNDO">SEGUNDO</option>
+                                        <option value="TERCERO">TERCERO</option>
+                                        <option value="CUARTO">CUARTO</option>
+                                        <option value="QUINTO">QUINTO</option>
+                                        <option value="SEXTO">SEXTO</option>
+                                    </select>
+                                </div>
+                                {{-- seccion --}}
+                                <label class="col-sm-2 col-form-label">Sección</label>
+                                <div class="col-sm-4 mt-1">
+                                    <select name="seccion" class="form-select form-control" style="width: 100%">
+                                        <option value="">Seleccione...</option>
+                                        <option value="ÚNICA">ÚNICA</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                        <option value="G">G</option>
+                                        <option value="H">H</option>
                                     </select>
                                 </div>
                             </div>
