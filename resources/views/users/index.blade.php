@@ -24,7 +24,7 @@
                                 <tr>
                                     <th class="bg-success text-white">N°</th>
                                     <th class="bg-success text-white">APELLIDO Y NOMBRES</th>
-                                    <th class="bg-success text-white">ROL</th>
+                                    <th class="bg-success text-white" width='80px'>ROL</th>
                                     <th class="bg-success text-white">CORREO</th>
                                     <th class="bg-success text-white">CONTRASEÑA</th>
                                     <th class="bg-success text-white">INSTITUCIÓN</th>
@@ -94,8 +94,7 @@
                         name: 'name'
                     },
                     {
-                        data: 'rol',
-                        name: 'rol'
+                        data: 'rol_g_s',
                     },
                     {
                         data: 'email',

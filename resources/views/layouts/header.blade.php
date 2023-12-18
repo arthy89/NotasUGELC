@@ -38,6 +38,13 @@
                             aria-current="page" href="{{ route('notas_index') }}">Notas</a>
                     </li>
 
+                    @if (Auth::user()->rol == 'Docente')
+                        <li class="nav-item mx-3">
+                            <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('multigrado')) ? 'btn-success' : 'btn-outline-dark' }}"
+                                aria-current="page" href="{{ route('multigrado') }}">Multigrado</a>
+                        </li>
+                    @endif
+
                     @if (Auth::user()->rol == 'Admin' || Auth::user()->rol == 'Director')
                         <li class="nav-item">
                             <a class="btn mx-1 {{ Str::startsWith(request()->url(), route('estadisticas_index')) ? 'btn-success' : 'btn-outline-dark' }}"

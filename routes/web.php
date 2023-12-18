@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\DocMulti;
 use App\Http\Controllers\EstudiantesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,14 @@ Route::get('notas/{curso}/{grado}', [NotasController::class, 'seccion'])->name('
 Route::get('docentes', [DirectorController::class, 'docentes'])->name('docentes')->middleware('auth');;
 Route::get('docentes/registro/{token}', [DirectorController::class, 'docentes_registro'])->name('docentes_registro');
 Route::post('docentes/registro/{token}/new', [DirectorController::class, 'docentes_registro_store'])->name('docentes_registro_store');
+
+//DOCENTE MULTIGRADO
+Route::group(['middleware' => ['auth', 'checkRole:Docente']], function () {
+    //ruta solo para docentes
+    Route::get('multigrado', [DocMulti::class, 'index'])->name('multigrado');
+});
+
+
 
 // correo
 // Route::view('correoxd', 'Mails/invitaciondocente');

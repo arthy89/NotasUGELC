@@ -8,12 +8,13 @@
                     <button type="button" class="btn btn-outline-light fw-bold" data-bs-dismiss="modal"
                         aria-label="Close">X</button>
                 </div>
+
                 {{-- formulario --}}
                 <form wire:submit.prevent="guardar_estudiante">
                     @csrf
                     <div class="modal-body">
                         @if ($errors->any())
-                            <div class="alert alert-danger" role="alert">
+                            <div wire:ignore.self class="alert alert-danger" role="alert">
                                 <strong>Error</strong>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -28,6 +29,7 @@
                                 })
                             </script>
                         @endif
+
                         {{-- apellidos --}}
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Apellidos</label>
@@ -99,6 +101,37 @@
                                 </div>
                             </div>
                         @endif
+
+                        {{-- <p>{{ $doc_multig }}</p>
+
+                        <p>
+                            @foreach ($doc_multig as $grados)
+                                {{ $grados->grado }} - {{ $grados->seccion }}
+                            @endforeach
+                        </p> --}}
+
+
+                        {{-- *DOCENTE MULTIGRADO --}}
+                        @if (Auth::user()->rol == 'Docente' && $doc_multig->count() > 0)
+                            <div class="mb-3 row">
+                                {{-- grado --}}
+                                <label class="col-sm-2 col-form-label">Grado</label>
+                                <div wire:ignore.self class="col-sm-4 mt-1 ">
+                                    <select id="grado" wire:model.defer="estudiante.est_grado" wire:key="grado"
+                                        class="form-select form-control" style="width: 100%">
+                                        <option value="">Seleccione...</option>
+                                    </select>
+                                </div>
+                                {{-- seccion --}}
+                                <label class="col-sm-2 col-form-label">Sección</label>
+                                <div wire:ignore.self class="col-sm-4 mt-1">
+                                    <select id="seccion" wire:model.defer="estudiante.est_seccion" wire:key="seccion"
+                                        class="form-select form-control" style="width: 100%">
+                                        <option value="">Seleccione...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer bg-light">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
@@ -114,6 +147,64 @@
 </div>
 
 @push('scripts')
+    @if (Auth::user()->rol == 'Docente' && $doc_multig->count() > 0)
+        <script>
+            // Obtener la información de los grados y secciones desde PHP
+            const grados_secc = JSON.parse("{!! addslashes($doc_multig) !!}");
+
+            // Nuevo elemento a agregar
+            const nuevoElemento = {
+                grado: "PRIMERO",
+                seccion: "B"
+            };
+
+            // Agregar el nuevo elemento al objeto grados_secc
+            grados_secc.push(nuevoElemento);
+
+            // Imprimir el objeto para verificar los cambios
+            console.log(grados_secc);
+
+            const selectGrados = document.getElementById('grado');
+
+            const selectSecciones = document.getElementById('seccion');
+
+
+            // Obtener una lista única de grados
+            const gradosUnicos = [...new Set(grados_secc.map(item => item.grado))];
+
+            // Agregar opciones al elemento select
+            gradosUnicos.forEach(grado => {
+                const option = document.createElement('option');
+                option.value = grado;
+                option.text = `${grado}`;
+                selectGrados.add(option);
+            });
+
+            // Manejar el evento change del select de grados
+            selectGrados.addEventListener('change', function() {
+                // Obtener el valor seleccionado
+                const selectedGrado = this.value;
+
+                // Filtrar las secciones correspondientes al grado seleccionado y ordenar de forma descendente alfabéticamente
+                const secciones = grados_secc
+                    .filter(item => item.grado === selectedGrado)
+                    .map(item => item.seccion)
+                    .sort((a, b) => a.localeCompare(b));
+
+                // Limpiar opciones existentes y agregar el predeterminado
+                selectSecciones.innerHTML = `<option value="">Seleccione...</option>`;
+
+                // Agregar opciones al select de secciones
+                secciones.forEach(seccion => {
+                    const option = document.createElement('option');
+                    option.value = seccion;
+                    option.text = `${seccion}`;
+                    selectSecciones.add(option);
+                });
+            });
+        </script>
+    @endif
+
     @if (Auth::user()->rol == 'Admin' && Auth::user()->id_inst == 1)
         <script>
             document.addEventListener('livewire:load', function() {
