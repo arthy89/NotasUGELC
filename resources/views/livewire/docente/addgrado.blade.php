@@ -51,7 +51,7 @@
                                 <select wire:model="multigrado.seccion" class="form-select form-control"
                                     style="width: 100%">
                                     <option value="">Seleccione...</option>
-                                    <option value="UNICA">ÚNICA</option>
+                                    <option value="ÚNICA">ÚNICA</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                     <option value="C">C</option>
