@@ -154,8 +154,8 @@
 
             // Nuevo elemento a agregar
             const nuevoElemento = {
-                grado: "PRIMERO",
-                seccion: "B"
+                grado: '{{ Auth::user()->grado }}',
+                seccion: '{{ Auth::user()->seccion }}'
             };
 
             // Agregar el nuevo elemento al objeto grados_secc
