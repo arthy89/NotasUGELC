@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\EditDatosRequest;
+use App\Models\Docmultigrado;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Institucion;
@@ -24,11 +25,18 @@ class UserController extends Controller
             $usuarios = User::join('institucion', function ($join) {
                 $join->on('users.id_inst', '=', 'institucion.id_inst');
             })
-                ->select('users.id', 'users.name', 'users.email', 'users.rol', 'users.contra', 'institucion.inst_name', 'institucion.distrito')->orderBy('users.name', 'asc')->get();
+                ->select('users.id', 'users.name', 'users.email', 'users.rol', 'users.grado', 'users.seccion', 'users.contra', 'institucion.inst_name', 'institucion.distrito')->orderBy('users.name', 'asc')->get();
             return DataTables::of($usuarios)
                 ->addIndexColumn()
                 ->addColumn('institucion', function ($usuario) {
                     return $usuario->inst_name . ' - ' . $usuario->distrito;
+                })
+                ->addColumn('rol_g_s', function ($usuario) {
+                    if ($usuario->rol == 'Docente') {
+                        return $usuario->rol . ' ' . $usuario->grado . ' ' . $usuario->seccion;
+                    } else {
+                        return $usuario->rol;
+                    }
                 })
                 ->addColumn('action', function ($row) {
                     $ruta_editar = route('editar_usuario', $row->id);
@@ -127,7 +135,12 @@ class UserController extends Controller
      */
     public function destroy(User $usuario)
     {
-        //
+        $multigrado = Docmultigrado::where('user', $usuario->id)->get();
+        if ($multigrado->count() > 0) {
+            foreach ($multigrado as $item) {
+                Docmultigrado::destroy($item->id);
+            }
+        }
         $usuario->delete();
         return redirect()->route('usuarios')->with('eliminar', 'ok');
     }

@@ -27,6 +27,27 @@
                                 @endforeach
                             </div>
                         @endif
+
+                        @if (Auth::user()->rol == 'Docente' && $doc_multig->count() > 0)
+                            <div wire:ignore class="row text-center">
+                                <div class="col-2 d-grid gap-2">
+                                    <button
+                                        wire:click="$emit('GraSecc', '{{ Auth::user()->grado }}', '{{ Auth::user()->seccion }}')"
+                                        class="btn btn-sm btn-success shadow">{{ Auth::user()->grado }}
+                                        <strong class="fs-6">{{ Auth::user()->seccion }}</strong>
+                                    </button>
+                                </div>
+                                @foreach ($doc_multig as $item)
+                                    <div class="col-2 d-grid gap-2">
+                                        <button
+                                            wire:click="$emit('GraSecc', '{{ $item->grado }}', '{{ $item->seccion }}')"
+                                            class="btn btn-sm btn-primary shadow">{{ $item->grado }}
+                                            <strong class="fs-6">{{ $item->seccion }}</strong>
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 @if ($mostrarTabla)
@@ -155,8 +176,8 @@
         document.getElementById('logro' + '-' + idestudiante).value = evaluation;
     }
 </script>
-
-@if (Auth::user()->rol == 'Docente')
+{{-- si el usuario es Docente y es un solo grado y seccion --}}
+@if (Auth::user()->rol == 'Docente' && $doc_multig->count() == 0)
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.emit('seccion', '{{ Auth::user()->seccion }}');

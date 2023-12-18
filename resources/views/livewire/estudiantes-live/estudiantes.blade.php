@@ -51,10 +51,6 @@
                                     </button>
                                 </td>
                             </tr>
-
-                            {{-- ? modal accion --}}
-                            @livewire('estudiantes-live.estudiante-eliminar', ['est' => $est], key($est->id_est))
-                            {{-- @livewire('estudiantes-live.estudiante-editar', ['est' => $est], key($est->id_est)) --}}
                         @endforeach
                     </tbody>
                 </table>
@@ -117,4 +113,9 @@
             </div>
         </div>
     </div>
+
+    @foreach ($estudiantes as $est)
+        {{-- ? modal accion --}}
+        @livewire('estudiantes-live.estudiante-eliminar', ['est' => $est], key('eliminar' . $est->id_est))
+    @endforeach
 </div>

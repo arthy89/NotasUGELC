@@ -3,6 +3,7 @@
 
 namespace App\Http\Livewire\Notas;
 
+use App\Models\Docmultigrado;
 use App\Models\Estudiantes;
 use App\Models\Notas;
 use Livewire\Component;
@@ -21,11 +22,17 @@ class GradoX extends Component
 
     public $mostrarTabla = false;
 
-    protected $listeners = ['seccion' => 'changeSecc'];
+    protected $listeners = [
+        'seccion' => 'changeSecc',
+        'GraSecc' => 'changeGraSecc',
+    ];
 
     public function render()
     {
         $usuario = auth()->user();
+
+        // caso del multigrado
+        $doc_multig = Docmultigrado::where('user', auth()->user()->id)->get();
 
         $grado = $this->grado;
         $curso_id = $this->curso->id_curso; // Obtén el valor de id_curso del objeto $this->curso
@@ -59,12 +66,21 @@ class GradoX extends Component
 
         return view('livewire.notas.grado-x', [
             'estudiantes' => $estudiantes,
-            'secciones' => $secciones
+            'secciones' => $secciones,
+            'doc_multig' => $doc_multig
         ]);
     }
 
     public function changeSecc($secc)
     {
+        $this->secc = $secc;
+        $this->mostrarTabla = true;
+    }
+
+    public function changeGraSecc($grado, $secc)
+    {
+        // dd($grado, $secc);
+        $this->grado = $grado;
         $this->secc = $secc;
         $this->mostrarTabla = true;
     }
